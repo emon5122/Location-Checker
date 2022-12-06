@@ -11,7 +11,6 @@ export default function Map({ latlng, zoom }) {
             lat: 23.8103,
             lng: 90.4125,
         };
-        console.log(centered)
     return (
         <MapContainer center={centered} zoom={zoom}>
             <TileLayer
