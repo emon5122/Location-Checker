@@ -29,15 +29,24 @@ const MyMap = ({ latlng, zoom }) => {
     }
   }, []);
 
-  return (
-    <MapContainer ref={mapRef} center={center} zoom={zoom} onMoveEnd={handleMapMove}>
+  // Use the useMemo hook to memoize the TileLayer component
+  const tileLayer = useMemo(
+    () => (
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
+    ),
+    []
+  );
+
+  return (
+    <MapContainer ref={mapRef} center={center} zoom={zoom} onMoveEnd={handleMapMove}>
+      {tileLayer}
       <Marker position={center} shouldUpdate={false} />
     </MapContainer>
   );
 };
+
 
 export default MyMap;
