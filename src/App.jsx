@@ -1,59 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { Marker } from "react-leaflet";
-import { MapContainer } from "react-leaflet/MapContainer";
-import { TileLayer } from "react-leaflet/TileLayer";
-import "./App.css";
+import Map from "./Map";
 
 const App = () => {
-    // Use the useState hook to track the user's current location
-    const [location, setLocation] = useState(null);
+    // const Dhaka = { latitude: 23.8103, longitude: 90.4125 };
+    const [location, setLocation] = useState();
 
-    // Use the useEffect hook to get the user's location when the component is mounted
     useEffect(() => {
-        navigator.geolocation.watchPosition(function (position) {
-            setLocation(position.coords);
+      // check if geolocation is supported by the browser
+      if ('geolocation' in navigator) {
+        // get the current position
+        navigator.geolocation.getCurrentPosition((position) => {
+          // update the state with the current position
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          });
         });
+    
+        // watch for changes to the position and update the state
+        const watchId = navigator.geolocation.watchPosition((position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          });
+        });
+    
+        // return a cleanup function to stop watching for changes
+        // when the component unmounts
+        return () => navigator.geolocation.clearWatch(watchId);
+      }
     }, []);
-
     return (
         <div>
-            {location ? (
-                <Map latlng={location} zoom={13} />
-            ) : (
-                "Loading location..."
-            )}
+            <Map latlng={location} zoom={13} />
         </div>
-    );
-};
-
-const Map = ({ latlng, zoom }) => {
-    // Use the useState hook to track the map's center coordinates
-    const [mapLatLng, setMapLatLng] = useState({ lat: 23.8103, lng: 90.4125 });
-
-    // Use the useEffect hook to update the mapLatLng value when the latlng prop changes
-    useEffect(() => {
-        if (latlng && latlng.lat && latlng.lng) {
-            setMapLatLng(latlng);
-        }
-    }, [latlng]);
-
-    // Calculate center coordinates
-    const center = [mapLatLng.lat, mapLatLng.lng];
-
-    // Handle map movement by updating the center coordinates
-    const handleMapMove = () => {
-        const newCenter = map.leafletElement.getCenter();
-        setMapLatLng({ lat: newCenter.lat, lng: newCenter.lng });
-    };
-
-    return (
-        <MapContainer center={center} zoom={zoom} onMoveEnd={handleMapMove}>
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            />
-            <Marker position={center} shouldUpdate={true} />
-        </MapContainer>
     );
 };
 
