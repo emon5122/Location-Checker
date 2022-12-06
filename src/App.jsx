@@ -1,4 +1,3 @@
-import "leaflet/dist/leaflet.css";
 import React, { useEffect, useState, lazy, Suspense } from "react";
 const LazyMap = lazy(() => import("./MyMap"));
 

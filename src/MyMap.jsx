@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState, useMemo, useCallback } from "react";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
-import "./styles/tailwind.css";
-import "leaflet/dist/leaflet.css";
+import { Marker } from "react-leaflet";
+import { MapContainer } from 'react-leaflet/MapContainer'
+import { TileLayer } from 'react-leaflet/TileLayer'
+import "./App.css"
 
 
 const MyMap = ({ latlng, zoom }) => {
@@ -49,10 +50,9 @@ const MyMap = ({ latlng, zoom }) => {
       center={center}
       zoom={zoom}
       onMoveEnd={handleMapMove}
-      className="w-full h-full"
     >
       {tileLayer}
-      <Marker position={center} shouldUpdate={false} className="w-full h-full" />
+      <Marker position={center} shouldUpdate={false} />
       {tileLayer}
       <Marker position={center} shouldUpdate={false} />
     </MapContainer>
