@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "./styles/tailwind.css";
+import "leaflet/dist/leaflet.css";
 
 
 const MyMap = ({ latlng, zoom }) => {
