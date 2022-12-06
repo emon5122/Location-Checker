@@ -16,7 +16,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="map-container">
+    <div >
       {location ? (
         <Suspense fallback="Loading map...">
           <LazyMap latlng={location} zoom={13} />
