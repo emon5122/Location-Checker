@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import "./styles/tailwind.css";
+
 
 const MyMap = ({ latlng, zoom }) => {
   // Use the useRef hook to store the MapContainer instance
@@ -41,7 +43,15 @@ const MyMap = ({ latlng, zoom }) => {
   );
 
   return (
-    <MapContainer ref={mapRef} center={center} zoom={zoom} onMoveEnd={handleMapMove}>
+    <MapContainer
+      ref={mapRef}
+      center={center}
+      zoom={zoom}
+      onMoveEnd={handleMapMove}
+      className="w-full h-full"
+    >
+      {tileLayer}
+      <Marker position={center} shouldUpdate={false} className="w-full h-full" />
       {tileLayer}
       <Marker position={center} shouldUpdate={false} />
     </MapContainer>

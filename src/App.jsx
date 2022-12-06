@@ -4,7 +4,7 @@ const LazyMap = lazy(() => import("./MyMap"));
 const App = () => {
   // Use the useState hook to track the user's current location
   const [location, setLocation] = useState(null);
- 
+
   // Use the useEffect hook to get the user's location when the component is mounted
   useEffect(() => {
     async function watchPosition() {
@@ -16,7 +16,7 @@ const App = () => {
   }, []);
 
   return (
-    <div >
+    <div style={{ margin: "auto" }}>
       {location ? (
         <Suspense fallback="Loading map...">
           <LazyMap latlng={location} zoom={13} />
