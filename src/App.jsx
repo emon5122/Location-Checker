@@ -32,7 +32,7 @@ const App = () => {
     
     return (
         <div>
-            <Map latlng={location} zoom={13} />
+            <Map latlng={location} zoom={10} />
         </div>
     );
 };
